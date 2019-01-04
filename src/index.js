@@ -1,23 +1,15 @@
 const express = require('express');
-const app = express();
+const settings = require('./server/settings');
+const app = settings(express());
+
 const morgan = require('morgan')
 const path = require('path')
 
 
-require('./database');
-// Settings
-app.set('port', process.env.PORT || 3000);
-
-// Middlewares
-app.use(morgan('dev'));
-app.use(express.json());
-
-// Routes
-app.use('/api/tasks' ,require('./routes/task.routes'));
-
+require('./server/database');
 
 // Statics files
-app.use(express.static(path.join(__dirname, '/public')))
+    app.use(express.static(path.join(__dirname, '/public')))
 
 
 // Listening
